@@ -1,0 +1,111 @@
+
+<Div >
+<h3 style="margin-right: 15px">
+  Inventario 2018
+</h3>
+  </Div>
+<div class="row" style="padding: 25px;">
+  <div class="row">
+    <div >
+      <p-button (click)='addProduct()'  label="New Product"  styleClass=".ui-button-secondary" icon="fa fa-plus" data-toggle="modal" data-target="#exampleModal"></p-button>
+    </div>
+  </div>
+  <p-table class="table-responsive" [columns]="cols" [value]="dataProducts" [rows]="10" [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+        <th class="ng-star-inserted">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          {{rowData[col.field]}}
+        </td>
+        <td >
+
+        <p-button *ngIf="rowData['productQuantity'] != 0" (click)="EditProduct(rowData)" styleClass="ui-button-warning" icon="fa fa-pencil" data-toggle="modal" data-target="#exampleModal"></p-button>
+      </td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</div>
+
+<!-- Modal -->
+<p-dialog [(visible)]="displayModal" [contentStyle]="{'max-height':'800px'}"
+          header="New Product" [(visible)]="displayModal" [modal]="true" [responsive]="true"  [minWidth]="500" [minY]="70"
+          [baseZIndex]="10000">
+  <div class="row col-md-12">
+    <p-messages  [(value)]="messages"></p-messages>
+  </div>
+    <div class="form-group">
+      <label >Select Type Product</label>
+      <div  class="col-md-12">
+      <p-dropdown [autoWidth]="false" [options]="types" optionLabel="name" placeholder="Select a Type" [(ngModel)]="selectedType"></p-dropdown>
+      </div  >
+      <label >Select Brand</label>
+      <div class="col-md-12" >
+      <p-dropdown [autoWidth]="false" [options]="brands" optionLabel="name" placeholder="Select a Brand" [(ngModel)]="selectedBrand"></p-dropdown>
+        </div  >
+      <label >Product Description</label>
+      <div  >
+        <input type="text" class="form-control"
+             maxlength="30" [(ngModel)]="newProduct.name"  pInputText/>
+      </div>
+      <label >Product Price</label>
+      <div  >
+
+        <p-spinner size="30" [(ngModel)]="newProduct.price" [min]="0" ></p-spinner>
+      </div>
+
+      <label >Product Existence</label>
+      <div  >
+        <p-spinner size="30" [(ngModel)]="newProduct.productQuantity" [min]="0" ></p-spinner>
+
+      </div>
+  <div class="dropdown-divider"></div>
+  <div class="col-md-12 ">
+    <div class="botones">
+      <button pButton  type="button" (click)="saveProdcut()"  label="save"></button>
+      <button pButton  type="button" (click)="cancelarSave()"label="Cancel" class="ui-button-secondary"></button>
+    </div>
+  </div>
+    </div>
+</p-dialog>
+
+
+<!-- Modal2 -->
+<p-dialog [(visible)]="displayModalEdit" [contentStyle]="{'max-height':'700px'}"
+          header="Edit Product Existence" [modal]="true" [responsive]="true"  [minWidth]="500" [minY]="70"
+          [baseZIndex]="10000">
+  <div style="padding: 10px">
+      <div class="row" style="font-weight: bold">Type:   </div> <h6>{{editProduct.name}}</h6>
+  </div>
+  <div  style="padding: 10px">
+      <div class="row"  style="font-weight: bold">Brand: </div> <h6>{{editProduct.brand}}</h6>
+  </div>
+  <div  style="padding: 10px">
+      <div class="row"  style="font-weight: bold"> Description: </div> <h6>{{editProduct.name}}</h6>
+    </div>
+  <div  style="padding: 10px">
+    <div class="row"  style="font-weight: bold"> Price: </div> <h6>{{editProduct.price}}</h6>
+  </div>
+  <div  style="padding: 10px">
+      <div class="row"  style="font-weight: bold">
+      Existence
+      </div>
+         <p-spinner size="30" [(ngModel)]="editProduct.productQuantity" [min]="0" ></p-spinner>
+  </div>
+  <div class="dropdown-divider"></div>
+  <div class="col-md-12 ">
+    <div class="botones">
+      <button pButton  type="button" (click)='saveEdit()'  label="Save"></button>
+      <button pButton  type="button" (click)="cancelarEdit()"label="Cancel" class="ui-button-secondary"></button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle" width="425"></p-confirmDialog>

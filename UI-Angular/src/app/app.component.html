@@ -1,0 +1,55 @@
+<!--*ngIf="loginService.isLoggedIn"-->
+<div  class="container-fluid col-md-12">
+    <nav *ngIf="loginService.isLoggedIn"  class="navbar navbar-expand-lg navbar-light bg-light">
+        <a href="#"  data-target="#sidebar" data-toggle="collapse" class="col-md-11"><i class="fa fa-navicon fa-2x py-2 p-1"></i></a>
+        <div class="dropdown">
+            <button style="width:100%" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"><span class="fa fa-user"></span> {{UserModel.username}}
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item">Cambiar Password</a></li>
+                <div class="dropdown-divider"></div>
+                <li><a class="dropdown-item"  (click)="onLogout()">Cerrar Sesión</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div *ngIf="loginService.isLoggedIn" >
+  <div  class="row d-flex d-md-block flex-nowrap wrapper">
+      <div class=" float-left collapse width show" id="sidebar">
+
+        <div class="list-group border-0 card text-center text-md-left">
+
+            <a href="#menu3" class="list-group-item d-inline-block collapsed" data-toggle="collapse" aria-expanded="false">
+                <div  routerLink="/data-view" class="row">
+                    <div class="col-md-10">
+                        <span class="d-none d-md-inline">Products</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="icon-search"></span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#menu4"  class="list-group-item d-inline-block collapsed" data-toggle="collapse" >
+                <div class="row">
+                    <div class="col-md-10">
+                        <span class="d-none d-md-inline">Reports</span>
+                    </div>
+                    <div class="col-md-2">
+                        <span class="fa fa-print"></span>
+                    </div>
+                </div>
+            </a>
+
+
+      </div>
+
+    </div>
+  </div>
+    </div>
+    <div >
+    <router-outlet></router-outlet>
+    </div>
+</div>
+
+
